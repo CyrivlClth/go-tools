@@ -1,3 +1,5 @@
+// Package snowflake 分布式ID雪花算法Golang实现
+// Powered by CyrivlClth
 package snowflake
 
 import (
@@ -6,68 +8,73 @@ import (
     "time"
 )
 
-const (
-    //系统时间回退错误
-    ErrClockMoveBackwards = "refuse_generate_id_by_system_clock_moved_backwards"
-    //无效的机器ID
-    ErrInvalidWorkerId = "invalid_worker_id"
-    //无效的数据中心ID
-    ErrInvalidDataCenterId = "invalid_data_center_id"
+var(
+    //ErrClockMoveBackwards 系统时间回退错误
+    ErrClockMoveBackwards = errors.New("refuse_generate_id_by_system_clock_moved_backwards")
+    //ErrInvalidWorkerID 无效的机器ID
+    ErrInvalidWorkerID=errors.New("invalid_worker_id")
+    //ErrInvalidDataCenterID 无效的数据中心ID
+    ErrInvalidDataCenterID=errors.New("invalid_data_center_id")
 )
 
 const (
     //开始时间戳
     startTimestamp = 1558930914000
     //机器ID位数
-    workerIdBits = 3
+    workerIDBits = 5
     //支持最大机器ID
-    maxWorkerId = -1 ^ (-1 << workerIdBits)
+    maxWorkerID = -1 ^ (-1 << workerIDBits)
     //数据中心ID位数
-    dataCenterIdBits = 2
+    dataCenterIDBits = 5
     //支持最大数据中心ID
-    maxDataCenterId = -1 ^ (-1 << dataCenterIdBits)
+    maxDataCenterID = -1 ^ (-1 << dataCenterIDBits)
     //序列位数
     sequenceBits = 12
     //机器ID左移位数
-    workerIdShift = sequenceBits
+    workerIDShift = sequenceBits
     //数据中心ID左移位数
-    dataCenterIdShift = workerIdBits + sequenceBits
+    dataCenterIDShift = workerIDBits + sequenceBits
     //时间戳左移位数
-    timestampLeftShift = dataCenterIdBits + workerIdBits + sequenceBits
+    timestampLeftShift = dataCenterIDBits + workerIDBits + sequenceBits
     //序列最大掩码
     sequenceMask = -1 ^ (-1 << sequenceBits)
 )
 
+// Snowflake 雪花算法结构体
 type Snowflake struct {
-    workerId      int64 //机器ID
-    dataCenterId  int64 //数据中心ID
+    workerID      int64 //机器ID
+    dataCenterID  int64 //数据中心ID
     sequence      int64 //序列
     lastTimestamp int64 //上次时间戳
     mutex         *sync.Mutex
 }
 
-func NewSnowflake(workerId, dataCenterId int64) (*Snowflake, error) {
-    if workerId < 0 || workerId > maxWorkerId {
-        return nil, errors.New(ErrInvalidWorkerId)
+// NewSnowflake 生成新的计算体
+// workerID：机器ID标识
+// dataCenterID 数据中心ID标识
+func NewSnowflake(workerID, dataCenterID int64) (*Snowflake, error) {
+    if workerID < 0 || workerID > maxWorkerID {
+        return nil, ErrInvalidWorkerID
     }
-    if dataCenterId < 0 || dataCenterId > maxDataCenterId {
-        return nil, errors.New(ErrInvalidDataCenterId)
+    if dataCenterID < 0 || dataCenterID > maxDataCenterID {
+        return nil, ErrInvalidDataCenterID
     }
-    s := &Snowflake{workerId, dataCenterId, 0, -1, new(sync.Mutex)}
+    s := &Snowflake{workerID, dataCenterID, 0, -1, new(sync.Mutex)}
     return s, nil
 }
 
-func (s *Snowflake) NextId() (int64, error) {
+// NextID 获取ID
+func (s *Snowflake) NextID() (int64, error) {
     s.mutex.Lock()
     defer s.mutex.Unlock()
-    return s.nextId()
+    return s.nextID()
 }
 
-func (s *Snowflake) nextId() (id int64, err error) {
+func (s *Snowflake) nextID() (id int64, err error) {
     t := timeGen()
     //当前时间戳小于上次，则系统时间发生过回退
     if t < s.lastTimestamp {
-        return 0, errors.New(ErrClockMoveBackwards)
+        return 0, ErrClockMoveBackwards
     }
     //当前时间戳等于上次，则生成该毫秒内序列
     if t == s.lastTimestamp {
@@ -82,7 +89,7 @@ func (s *Snowflake) nextId() (id int64, err error) {
         s.sequence = 0
     }
     s.lastTimestamp = t
-    return ((t - startTimestamp) << timestampLeftShift) | (s.dataCenterId << dataCenterIdShift) | (s.workerId << workerIdShift) | s.sequence,
+    return ((t - startTimestamp) << timestampLeftShift) | (s.dataCenterID << dataCenterIDShift) | (s.workerID << workerIDShift) | s.sequence,
         nil
 }
 
