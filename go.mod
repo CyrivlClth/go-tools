@@ -1,3 +1,3 @@
-module github.com/Cyrivlclth/snowflake
+module github.com/CyrivlClth/snowflake
 
 go 1.12
