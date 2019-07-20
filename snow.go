@@ -6,6 +6,8 @@ import (
 	"errors"
 	"sync"
 	"time"
+
+	"github.com/CyrivlClth/snowflake/idgen"
 )
 
 var (
@@ -52,7 +54,7 @@ type snowflake struct {
 // New 生成新的计算体
 // workerID：机器ID标识
 // dataCenterID 数据中心ID标识
-func New(workerID, dataCenterID int64) (*snowflake, error) {
+func New(workerID, dataCenterID int64) (idgen.IDGenerator, error) {
 	if workerID < 0 || workerID > maxWorkerID {
 		return nil, ErrInvalidWorkerID
 	}
