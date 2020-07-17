@@ -51,6 +51,11 @@ type snowflake struct {
 	mutex         *sync.Mutex
 }
 
+func (s *snowflake) GetID() int64 {
+	i, _ := s.NextID()
+	return i
+}
+
 // New 生成新的计算体
 // workerID：机器ID标识
 // dataCenterID 数据中心ID标识
