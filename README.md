@@ -1,17 +1,27 @@
-# Snowflake
+# Go Tools
 
-雪花算法golang实现
+The awesome tool kit for Golang.
 
-## 说明
+Waiting for generic type of golang.
 
-Twitter开源的雪花算法生成ID，每毫秒每个机器可生成4096个连续不重复ID。
+## Overview
 
-## Benchmark
+- [x] ID generator
 
-| Benchmark name          | COUNT   | ns/op     |
-| ----------------------- | ------- | --------- |
-| BenchmarkNewSnowflake-4 | 5000000 | 244 ns/op |
+- [] Slice tools
 
-## 工具
+- [] Map tools
 
-从 [github.com/CyrivlClth/snowserver](https://github.com/CyrivlClth/snowserver.git) 可获取id生成器工作节点的服务。
+## Getting Started
+
+TODO
+
+## Contributing
+
+You can just create a new issues and commit your code
+
+## License
+
+©CyrivlClth, 2019-time.Now()
+
+Released under the [MIT License](./LICENSE)

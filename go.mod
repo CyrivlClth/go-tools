@@ -1,8 +1,3 @@
-module github.com/CyrivlClth/snowflake
+module github.com/CyrivlClth/go-tools
 
-go 1.11
-
-require (
-	github.com/golang/protobuf v1.4.2
-	google.golang.org/grpc v1.31.0
-)
+go 1.14

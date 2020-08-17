@@ -8,9 +8,9 @@ import (
 
 	"google.golang.org/grpc"
 
-	snowflakepb "github.com/CyrivlClth/snowflake/server/grpc/proto"
-	"github.com/CyrivlClth/snowflake/server/grpc/service"
-	"github.com/CyrivlClth/snowflake/snowflake"
+	snowflakepb "github.com/CyrivlClth/go-tools/idgen/server/grpc/proto"
+	"github.com/CyrivlClth/go-tools/idgen/server/grpc/service"
+	"github.com/CyrivlClth/go-tools/idgen/snowflake"
 )
 
 var port = flag.Int("port", 5550, "server port")

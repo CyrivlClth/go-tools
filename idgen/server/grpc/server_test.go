@@ -8,7 +8,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	snowflakepb "github.com/CyrivlClth/snowflake/server/grpc/proto"
+	snowflakepb "github.com/CyrivlClth/go-tools/idgen/server/grpc/proto"
 )
 
 func ExampleClient() {

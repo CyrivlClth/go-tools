@@ -6,7 +6,7 @@ package serialnum
 import (
 	"sync"
 
-	"github.com/CyrivlClth/snowflake/idgen"
+	"github.com/CyrivlClth/go-tools/idgen"
 )
 
 type generator struct {

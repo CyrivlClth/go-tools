@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/CyrivlClth/snowflake/idgen"
+	"github.com/CyrivlClth/go-tools/idgen"
 )
 
 var (

@@ -4,8 +4,8 @@ package service
 import (
 	"context"
 
-	"github.com/CyrivlClth/snowflake/idgen"
-	snowflake "github.com/CyrivlClth/snowflake/server/grpc/proto"
+	"github.com/CyrivlClth/go-tools/idgen"
+	snowflake "github.com/CyrivlClth/go-tools/idgen/server/grpc/proto"
 )
 
 var _ snowflake.SnowflakeServiceServer = (*Snowflake)(nil)
