@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package snowflake;
+
+service SnowflakeService {
+    rpc NextID (NextIDReq) returns (NextIDResp);
+}
+
+message NextIDReq {
+}
+
+message NextIDResp {
+    int64 id = 1;
+}
