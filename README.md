@@ -14,7 +14,9 @@ Waiting for generic type of golang.
 
 ## Getting Started
 
-TODO
+```bash
+go get -u github.com/CyrivlClth/go-tools
+```
 
 ## Contributing
 
