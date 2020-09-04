@@ -12,6 +12,24 @@ type _suiteForInteger struct {
 	suite.Suite
 }
 
+func (s *_suiteForInteger) TestSort() {
+	tests := []struct {
+		name string
+		args []int
+		want []int
+	}{
+		{"order", []int{2, 1, 3}, []int{1, 2, 3}},
+		{"order2", []int{1, 1, 3}, []int{1, 1, 3}},
+	}
+	for _, tt := range tests {
+		s.Run(tt.name, func() {
+			got := Integer(tt.args).Sort()
+			require.EqualValues(s.T(), tt.want, got)
+			require.EqualValues(s.T(), tt.want, tt.args)
+		})
+	}
+}
+
 func (s *_suiteForInteger) TestDistinct() {
 	tests := []struct {
 		name string

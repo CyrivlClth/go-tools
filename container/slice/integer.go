@@ -1,6 +1,10 @@
 // package slice
 package slice
 
+import (
+	"sort"
+)
+
 type Integer []int
 
 // Distinct distinct elem in slice
@@ -66,4 +70,12 @@ func (s Integer) Filter(fn func(x int) bool) Integer {
 	}
 
 	return s[:i]
+}
+
+// Sort sort integer slice
+// it depends on sort.Sort
+func (s Integer) Sort() Integer {
+	z := sort.IntSlice(s)
+	sort.Sort(z)
+	return s
 }
