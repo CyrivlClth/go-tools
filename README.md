@@ -1,5 +1,7 @@
 # Go Tools
 
+[![Build Status](https://api.travis-ci.org/CyrivlClth/go-tools.svg)](https://api.travis-ci.org/CyrivlClth/go-tools)
+
 The awesome tool kit for Golang.
 
 Waiting for generic type of golang.
