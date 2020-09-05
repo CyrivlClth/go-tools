@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/CyrivlClth/snowflake/idgen"
+	"github.com/CyrivlClth/go-tools/idgen"
 )
 
 var (
@@ -49,6 +49,11 @@ type snowflake struct {
 	sequence      int64 // 序列
 	lastTimestamp int64 // 上次时间戳
 	mutex         *sync.Mutex
+}
+
+func (s *snowflake) GetID() int64 {
+	i, _ := s.NextID()
+	return i
 }
 
 // New 生成新的计算体

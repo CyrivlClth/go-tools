@@ -1,0 +1,2 @@
+// package slice
+package slice
