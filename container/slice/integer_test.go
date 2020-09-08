@@ -30,6 +30,12 @@ func (s *_suiteForInteger) TestSort() {
 	}
 }
 
+func BenchmarkInteger_Distinct(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Integer([]int{1, 3, 3, 2, 5, 3}).Distinct()
+	}
+}
+
 func (s *_suiteForInteger) TestDistinct() {
 	tests := []struct {
 		name string
