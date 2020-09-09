@@ -34,6 +34,30 @@ func (s Integer) Distinct() Integer {
 	return s
 }
 
+func Distinct(v interface{}, key func(i int) interface{}) {
+	rv := reflect.ValueOf(v)
+	if rv.Kind() != reflect.Ptr {
+		return
+	}
+	rv = rv.Elem()
+	if rv.Kind() != reflect.Slice {
+		return
+	}
+	m, j := make(map[interface{}]struct{}), 0
+	l := rv.Len()
+	for i := 0; i < l; i++ {
+		k := key(i)
+		if _, ok := m[k]; !ok {
+			m[k] = struct{}{}
+			if j != i {
+				rv.Index(j).Set(rv.Index(i))
+			}
+			j++
+		}
+	}
+	rv.SetLen(j)
+}
+
 // Contains check if slice contains elem
 func (s Integer) Contains(x int) bool {
 	return contains(len(s), func(i int) bool { return s[i] == x })

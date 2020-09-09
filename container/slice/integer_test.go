@@ -29,6 +29,37 @@ func (s *_suiteForInteger) TestSort() {
 		})
 	}
 }
+func BenchmarkInterfaceDistinct(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		t := []int{1, 3, 3, 2, 5, 3}
+		Distinct(&t, func(i int) interface{} {
+			return t[i]
+		})
+	}
+}
+
+func (s _suiteForInteger) TestInterfaceDistinct() {
+	tests := []struct {
+		name string
+		args []int
+		want []int
+	}{
+		{"no duplicate elem", []int{1, 2, 3}, []int{1, 2, 3}},
+		{"duplicate elem many times", []int{1, 3, 3, 2, 5, 3}, []int{1, 3, 2, 5}},
+		{"start with duplicate elem", []int{3, 3, 2, 1}, []int{3, 2, 1}},
+		{"empty", []int{}, []int{}},
+		{"nil", nil, nil},
+		{"only one", []int{1}, []int{1}},
+	}
+	for _, tt := range tests {
+		s.Run(tt.name, func() {
+			Distinct(&tt.args, func(i int) interface{} {
+				return tt.args[i]
+			})
+			require.EqualValues(s.T(), tt.want, tt.args)
+		})
+	}
+}
 
 func BenchmarkInteger_Distinct(b *testing.B) {
 	for i := 0; i < b.N; i++ {
