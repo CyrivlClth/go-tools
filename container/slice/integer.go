@@ -34,6 +34,7 @@ func (s Integer) Distinct() Integer {
 	return s
 }
 
+// Distinct distinct elem in array
 func Distinct(v interface{}, key func(i int) interface{}) {
 	rv := reflect.ValueOf(v)
 	if rv.Kind() != reflect.Ptr {

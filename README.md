@@ -1,6 +1,8 @@
 # Go Tools
 
-[![Build Status](https://api.travis-ci.org/CyrivlClth/go-tools.svg)](https://api.travis-ci.org/CyrivlClth/go-tools)
+[![Build Status](https://travis-ci.org/CyrivlClth/go-tools.svg?branch=master)](https://travis-ci.org/CyrivlClth/go-tools)
+
+[中文文档](./README-ZH.md)
 
 The awesome tool kit for Golang.
 
@@ -40,11 +42,21 @@ Waiting for generic type of golang.
     
     - [x] serial no
 
-- [ ] Slice tools
+- [ ] Container tools
 
-    - [x] type `[]int` method: `Distinct`, `Merge`, `Sort`, `Filter`
+    - [ ] Slice
 
-- [ ] Map tools
+        - [x] type `[]int` method: `Distinct`, `Merge`, `Sort`, `Filter`
+        
+        - [ ] type `interface`
+
+    - [ ] Map tools
+    
+    - [x] JSON Object
+
+- [ ] Bean
+
+    - [ ] Copy
 
 
 
@@ -52,6 +64,12 @@ Waiting for generic type of golang.
 
 ```bash
 go get -u github.com/CyrivlClth/go-tools
+```
+
+If you just want one of them, you can do like this:
+
+```bash
+go get -u github.com/CyrivlClth/go-tools/jsonobj
 ```
 
 ## Examples
