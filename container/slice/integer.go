@@ -2,7 +2,9 @@
 package slice
 
 import (
+	"reflect"
 	"sort"
+	"unsafe"
 )
 
 type Integer []int
@@ -10,35 +12,50 @@ type Integer []int
 // Distinct distinct elem in slice
 // only keep different elem in slice
 // it will keep order of origin
-// WARNING: this method will change origin slice sort and return part of it
+// WARNING: this method will change origin slice sort and return it
 //
 // Example:
 //     Integer([]int{2,2,1,3}).Distinct()
 // >>> []int{2,1,3}
-// origin slice: []int{2,1,3,3}
+// origin slice: []int{2,1,3}
 func (s Integer) Distinct() Integer {
 	if len(s) == 0 {
 		return s
 	}
-
-	m := make(map[int]bool)
+	m, i := make(map[int]struct{}), 0
 	for _, u := range s {
-		m[u] = true
-	}
-	l := len(m)
-	i := 0
-	for _, u := range s {
-		if m[u] {
-			s[i] = u
-			m[u] = false
+		if _, ok := m[u]; !ok {
+			m[u], s[i] = struct{}{}, u
 			i++
 		}
-		if i >= l {
-			break
+	}
+	(*reflect.SliceHeader)(unsafe.Pointer(&s)).Len = i
+
+	return s
+}
+
+func Distinct(v interface{}, key func(i int) interface{}) {
+	rv := reflect.ValueOf(v)
+	if rv.Kind() != reflect.Ptr {
+		return
+	}
+	rv = rv.Elem()
+	if rv.Kind() != reflect.Slice {
+		return
+	}
+	m, j := make(map[interface{}]struct{}), 0
+	l := rv.Len()
+	for i := 0; i < l; i++ {
+		k := key(i)
+		if _, ok := m[k]; !ok {
+			m[k] = struct{}{}
+			if j != i {
+				rv.Index(j).Set(rv.Index(i))
+			}
+			j++
 		}
 	}
-
-	return s[:i]
+	rv.SetLen(j)
 }
 
 // Contains check if slice contains elem
