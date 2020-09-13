@@ -1,4 +1,5 @@
 // package experimental
+// experimental feature is unused
 package experimental
 
 import (
