@@ -7,6 +7,7 @@ package convert
 import (
 	"encoding/json"
 	"strconv"
+	"strings"
 	"unsafe"
 )
 
@@ -48,4 +49,50 @@ func IntToStrSlice(s []int) []string {
 	}
 
 	return z
+}
+
+var asciiSpace = [256]uint8{'\t': 1, '\n': 1, '\v': 1, '\f': 1, '\r': 1, ' ': 1}
+
+func camelToSnake(s string) string {
+	var b strings.Builder
+	b.Grow(len(s) * 2)
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		if c == '_' || asciiSpace[c] == 1 {
+			continue
+		}
+
+		if c >= 'A' && c <= 'Z' {
+			c += 'a' - 'A'
+			if i != 0 {
+				b.WriteByte('_')
+			}
+		}
+		b.WriteByte(c)
+	}
+
+	return b.String()
+}
+
+func snakeToCamel(s string, first bool) string {
+	var b strings.Builder
+	b.Grow(len(s))
+	n := first
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		if c == '_' || asciiSpace[c] == 1 {
+			n = true
+			continue
+		}
+		if c >= 'A' && c <= 'Z' {
+			c += 'a' - 'A'
+		}
+		if n {
+			c -= 'a' - 'A'
+			n = false
+		}
+		b.WriteByte(c)
+	}
+
+	return b.String()
 }
