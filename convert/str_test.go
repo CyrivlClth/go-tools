@@ -18,7 +18,7 @@ func Test_camelToSnake(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := camelToSnake(tt.args)
+			got := CamelToSnake(tt.args)
 			assert.Equal(t, tt.want, got)
 		})
 	}
@@ -39,7 +39,7 @@ func Test_snakeToCamel(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := snakeToCamel(tt.args.s, tt.args.first)
+			got := SnakeToCamel(tt.args.s, tt.args.first)
 			assert.Equal(t, tt.want, got)
 		})
 	}

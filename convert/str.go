@@ -53,7 +53,7 @@ func IntToStrSlice(s []int) []string {
 
 var asciiSpace = [256]uint8{'\t': 1, '\n': 1, '\v': 1, '\f': 1, '\r': 1, ' ': 1}
 
-func camelToSnake(s string) string {
+func CamelToSnake(s string) string {
 	var b strings.Builder
 	b.Grow(len(s) * 2)
 	for i := 0; i < len(s); i++ {
@@ -74,7 +74,7 @@ func camelToSnake(s string) string {
 	return b.String()
 }
 
-func snakeToCamel(s string, first bool) string {
+func SnakeToCamel(s string, first bool) string {
 	var b strings.Builder
 	b.Grow(len(s))
 	n := first
